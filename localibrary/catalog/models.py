@@ -20,6 +20,7 @@ class Genre(models.Model):
                 violation_error_code="Genre already exists (case insensitive match.)"
             )
         ]
+        # the lower case of the value in the name filed must be unique. 
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
@@ -44,6 +45,11 @@ class Book(models.Model):
     def get_absolute_url(self):
         """Returns the URL to access a detail record for this book."""
         return reverse('book-detail', args=[str(self.id)])
+    
+    def display_genre(self):
+        return ', '.join(genre.name for genre in self.genre.all()[:3])
+    
+    display_genre.short_description = 'Genre'
 
 import uuid 
 class BookInstance(models.Model):
@@ -91,3 +97,22 @@ class Author(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.last_name}, {self.first_name}'
+
+class Language(models.Model):
+    name = models.CharField(max_length=200, unique=True)
+
+    def __str__(self):
+        return self.name 
+
+    def get_absolute_url(self):
+        return reverse('language-detail', args=[str(self.id)])
+    
+    class Meta:
+        constraints = [
+            UniqueConstraint(
+                Lower('name'), 
+                name='language_name_case_insensitive_unique',
+                violation_error_message="Language already exists (case insensitive match)"
+            )
+        ]
+    
