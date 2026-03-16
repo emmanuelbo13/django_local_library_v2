@@ -6,6 +6,7 @@ def index(request):
     num_instances = BookInstance.objects.all().count()
 
     num_instances_available = BookInstance.objects.filter(status__exact='a').count()
+    num_fantasy_books = Genre.objects.filter(name__icontains='fantasy').count()
 
     num_authors = Author.objects.count()
 
@@ -14,6 +15,7 @@ def index(request):
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
         'num_authors': num_authors,
-    }
+        'num_fantasy_books' : num_fantasy_books
+        }
 
     return render(request, 'index.html', context=context)
