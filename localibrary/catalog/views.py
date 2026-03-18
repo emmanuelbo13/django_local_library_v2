@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .models import Author, Book, BookInstance, Genre
+from django.views.generic import ListView, DetailView
+
 
 def index(request):
     num_books = Book.objects.all().count()
@@ -19,3 +21,13 @@ def index(request):
         }
 
     return render(request, 'index.html', context=context)
+
+class BookListView(ListView):
+    model = Book 
+    context_object_name = 'book_list'
+    #queryset = Book.objects.filter(title__icontains='war')
+    paginate_by = 1
+    
+class BookDetailView(DetailView):
+    model = Book
+    
