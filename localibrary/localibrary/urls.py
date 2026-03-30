@@ -22,7 +22,8 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('catalog/', include('catalog.urls'))
+    path('catalog/', include('catalog.urls')), 
+    path('schema-viewer/', include('schema_viewer.urls')),
 ]
 
 # REDIRECTING THE URL TO CATALOG 

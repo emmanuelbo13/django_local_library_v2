@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block title %} {{ bookinstance|shortname }} - Local Library {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>{{ bookinstance|shortname }}</h1>
+        <p><strong>Title:</strong> {{ bookinstance.title }}</p>
+        <p><strong>Author:</strong> {{ bookinstance.author }}</p>
+        <p><strong>ISBN:</strong> {{ bookinstance.isbn }}</p>
+        <p><strong>ISBN-13:</strong> {{ bookinstance.isbn13 }}</p>
+        <p><strong>ISBN-10:</strong> {{ bookinstance.isbn10 }}</p>
+        <p><strong>Quantity:</strong> {{ bookinstance.quantity }}</p>
+        <p><strong>Status:</strong> <span class="status-badge" id="status-badge">In Stock</span></p>
+        <hr>
+        <h3>Availability Details</h3>
+        <p><strong>Available:</strong> <span class="paginate" id="available_quantity"></span></p>
+        <p><strong>Out of Stock:</strong> <span class="paginate" id="out_of_stock_quantity"></span></p>
+        <p><strong>Last Available:</strong> {{ bookinstance.last_available|default:"Never" }}</p>
+        <p><strong>Available since:</strong> {{ bookinstance.available_since|default:"Never" }}</p>
+        <p><strong>Condition:</strong> {{ bookinstance.condition|default:"Unknown" }}</p>
+        <p><strong>Notes:</strong> {{ bookinstance.notes|default:"No notes" }}</p>
+        <p><strong>Last Updated:</strong> {{ bookinstance.last_updated }}</p>
+        <p><strong>Call No:</strong> {{ bookinstance.call_number|default:"N/A" }}</p>
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Book Instance List</h1>
+    {% if bookinstance_list %}
+    <ul>
+        {% for bookinstance in bookinstance_list %}
+        <li>
+            {{ bookinstance.id }} -
+            <a href="{{ bookinstance.book.get_absolute_url }}">{{ bookinstance.book.title }}</a>
+            ({{ bookinstance.imprint }}) -
+            {{ bookinstance.get_status_display }}
+            {% if bookinstance.due_back %}
+            - Due: {{ bookinstance.due_back }}
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>There are no book instances in the library</p>
+    {% endif %}
+{% endblock %}

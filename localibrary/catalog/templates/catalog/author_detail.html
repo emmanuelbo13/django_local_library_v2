@@ -4,11 +4,14 @@
     <h1>{{author.first_name}} {{author.last_name}}</h1>
     <hr>
     <h3>Books</h3>
-    <ul>
+    <dl>
         {% for book in author.book_set.all %}
-            <li><a href="{{book.get_absolute_url}}">{{book.title}}</a>
-                {{book.bookinstance_set.count}}
-            </li>
+            <dt><a href="{{book.get_absolute_url}}">{{book.title}}</a>
+                {{book.bookinstance_set.count}} copies
+            </dt>
+            <dd>{{book.summary}}</dd>
+        {% empty %}
+            <p>There are no books for this author</p>
         {% endfor %}
-    </ul>
+    </dl>
 {% endblock %}

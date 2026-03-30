@@ -35,6 +35,7 @@ class Book(models.Model):
 
     # ManyToManyField used because genre can contain many books. Books can cover many genres.
     # Genre class has already been defined so we can specify the object above.
+    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
     genre = models.ManyToManyField(
         Genre, help_text="Select a genre for this book")
 
@@ -65,7 +66,7 @@ class BookInstance(models.Model):
         ('r', 'Reserved'),
     )
 
-    status = models.CharField(
+    status = models.CharField( 
         max_length=1,
         choices=LOAN_STATUS,
         blank=True,
