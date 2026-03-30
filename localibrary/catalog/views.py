@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Author, Book, BookInstance, Genre
+from .models import Author, Book, BookInstance, Genre, Language
 from django.views.generic import ListView, DetailView
 
 
@@ -11,13 +11,17 @@ def index(request):
     num_fantasy_books = Genre.objects.filter(name__icontains='fantasy').count()
 
     num_authors = Author.objects.count()
+    num_visits = request.session.get('num_visits', 0)
+    num_visits += 1
+    request.session['num_visits'] = num_visits
 
     context = {
         'num_books': num_books,
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
         'num_authors': num_authors,
-        'num_fantasy_books' : num_fantasy_books
+        'num_fantasy_books' : num_fantasy_books, 
+        'num_visits': num_visits,
         }
 
     return render(request, 'index.html', context=context)
@@ -34,6 +38,22 @@ class BookDetailView(DetailView):
 class AuthorListView(ListView):
     model = Author
     context_object_name = 'author_list'
-
+    paginate_by = 3
+    
 class AuthorDetailView(DetailView):
     model = Author
+
+class LanguageListView(ListView):
+    model = Language
+    context_object_name = 'language_list'
+    #template_name = 'catalog/languages_list.html'
+
+class BookInstanceListView(ListView):
+    model = BookInstance
+    context_object_name = 'bookinstance_list'
+    paginate_by = 10
+
+
+class BookInstanceDetailView(DetailView):
+    model = BookInstance
+    context_object_name = 'bookinstance'

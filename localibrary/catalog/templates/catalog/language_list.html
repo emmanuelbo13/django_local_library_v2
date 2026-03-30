@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %} <title>Languages</title> {% endblock %}
+
+{% block content %}
+<h1>Languages</h1>
+<p>Available languages in the library:</p>
+<ul>
+    {% for language in language_list %}
+    <li>
+        <strong>{{ language.name }}</strong> <a href="">{{ language.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
